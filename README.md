@@ -1,2 +1,11 @@
-# dovehome
-A modern real estate website showcasing premium properties, pricing in Naira, property listings, and company information. Designed with responsive layouts, smooth navigation, and a luxury user experience.
+
+  # Real Estate Website Design
+
+  This is a code bundle for Real Estate Website Design. The original project is available at https://www.figma.com/design/kHH5vhCBVNZMnlaM2FDybD/Real-Estate-Website-Design.
+
+  ## Running the code
+
+  Run `npm i` to install the dependencies.
+
+  Run `npm run dev` to start the development server.
+  
