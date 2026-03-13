@@ -225,6 +225,7 @@ export function AboutPage() {
           >
             <Link
               to="/properties"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="px-8 py-4 bg-[#c9a961] text-white rounded-full hover:bg-[#b8984f] transition-all duration-300 text-sm tracking-wide"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
             >
@@ -232,6 +233,7 @@ export function AboutPage() {
             </Link>
             <Link
               to="/contact"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="px-8 py-4 border-2 border-[#c9a961] text-[#c9a961] rounded-full hover:bg-[#c9a961] hover:text-white transition-all duration-300 text-sm tracking-wide"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
             >

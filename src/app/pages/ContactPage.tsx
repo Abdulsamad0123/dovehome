@@ -3,7 +3,6 @@ import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { HeroSection } from "../components/HeroSection";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -61,14 +60,30 @@ export function ContactPage() {
     <div className="min-h-screen bg-white">
       <DoveHeader />
       
-      <HeroSection
-        title="Get In Touch"
-        subtitle="We'd love to hear from you. Reach out to our team today."
-        primaryCta={{ label: "Schedule Viewing", to: "/schedule-viewing" }}
-        secondaryCta={{ label: "View Properties", to: "/properties" }}
-        imageSrc="https://images.unsplash.com/photo-1479839672679-a46482f0e7c8?auto=format&fit=crop&w=1600&q=80"
-        heightClass="h-[50vh]"
-      />
+      <section className="relative py-20 bg-gradient-to-br from-[#0b1726] to-[#1e2b46]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl lg:text-6xl text-white mb-6"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Get In Touch
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl text-white/80 max-w-2xl mx-auto"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300 }}
+            >
+              We'd love to hear from you. Reach out to our team today.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <section className="py-24 lg:py-32">

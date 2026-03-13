@@ -53,6 +53,8 @@ export function LeadershipPage() {
                     src={ceoImage}
                     alt={ceoMember.name}
                     className="w-full h-auto object-cover rounded-lg"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
               </div>

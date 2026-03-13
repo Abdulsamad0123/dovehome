@@ -67,6 +67,7 @@ export function DoveAbout() {
             >
               <Link
                 to="/about"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="inline-block px-8 py-3 border-2 border-[#c9a961] text-[#c9a961] rounded-full hover:bg-[#c9a961] hover:text-white transition-all duration-300 text-sm tracking-wide"
                 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
               >

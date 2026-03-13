@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router";
+import { Menu, X, Search } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router";
 import logoSrc from "@/assets/logo.jpeg";
 
 const scrollToTop = () => {
@@ -11,7 +11,10 @@ const scrollToTop = () => {
 export function DoveHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +31,16 @@ export function DoveHeader() {
     { label: "Leadership", path: "/leadership" },
     { label: "Contact", path: "/contact" }
   ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/properties?search=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery("");
+      setSearchOpen(false);
+      scrollToTop();
+    }
+  };
 
   return (
     <motion.header
@@ -100,12 +113,21 @@ export function DoveHeader() {
             >
               <Link
                 to="/schedule-viewing"
+                onClick={scrollToTop}
                 className="hidden lg:block px-6 py-2.5 bg-[#c9a961] text-white text-sm tracking-wide rounded-full hover:bg-[#b8984f] transition-all duration-300 hover:shadow-lg"
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Schedule Viewing
               </Link>
             </motion.div>
+
+            {/* Search Button */}
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              className="p-2 text-[#c9a961] hover:text-[#b8984f] transition"
+            >
+              <Search className="w-5 h-5" />
+            </button>
 
             {/* Mobile Menu Button */}
             <button
@@ -155,13 +177,44 @@ export function DoveHeader() {
                 <Link
                   to="/schedule-viewing"
                   className="w-full px-6 py-2.5 bg-[#c9a961] text-white text-sm rounded-full hover:bg-[#b8984f] transition text-center"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    scrollToTop();
+                  }}
                 >
                   Schedule Viewing
                 </Link>
               </div>
             </div>
           </motion.nav>
+        )}
+
+        {/* Search Form */}
+        {searchOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="border-t border-gray-200 py-4"
+          >
+            <form onSubmit={handleSearch} className="max-w-md mx-auto px-6">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Search properties by location or type..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-1 px-4 py-2 border border-[#c9a961] rounded-full text-[#2d2d2d] placeholder-[#5a5a5a]"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-2 bg-[#c9a961] text-white rounded-full hover:bg-[#b8984f] transition"
+                >
+                  <Search className="w-5 h-5" />
+                </button>
+              </div>
+            </form>
+          </motion.div>
         )}
       </div>
     </motion.header>

@@ -3,6 +3,7 @@ import { useInView } from "../hooks/useInView";
 import { useRef, useState } from "react";
 import { MapPin, ChevronRight } from "lucide-react";
 import { Link } from "react-router";
+import { properties as allProperties } from "../data/properties";
 
 interface PropertyCardProps {
   id: string;
@@ -86,29 +87,13 @@ function PropertyCard({ id, image, name, location, price, delay = 0 }: PropertyC
   );
 }
 
-const properties = [
-  {
-    id: "1",
-    image: "https://images.unsplash.com/photo-1740479948645-3eb39a64e843?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBtb2Rlcm4lMjBtYW5zaW9ufGVufDF8fHx8MTc2Nzc5Nzc3OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    name: "The Sterling Estate",
-    location: "Beverly Hills, CA",
-    price: "$8,950,000"
-  },
-  {
-    id: "2",
-    image: "https://images.unsplash.com/photo-1568115286680-d203e08a8be6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBwZW50aG91c2V8ZW58MXx8fHwxNzY3NzkwMDI4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    name: "Manhattan Penthouse",
-    location: "New York, NY",
-    price: "$12,500,000"
-  },
-  {
-    id: "3",
-    image: "https://images.unsplash.com/photo-1622015663381-d2e05ae91b72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB2aWxsYSUyMGFyY2hpdGVjdHVyZXxlbnwxfHx8fDE3Njc2OTIxOTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-    name: "Coastal Modern Villa",
-    location: "Malibu, CA",
-    price: "$15,750,000"
-  }
-];
+const properties = allProperties.slice(0, 3).map(prop => ({
+  id: prop.id,
+  image: prop.image,
+  name: prop.title,
+  location: prop.location,
+  price: prop.price
+}));
 
 export function DoveProperties() {
   const ref = useRef(null);
@@ -167,6 +152,7 @@ export function DoveProperties() {
         >
           <Link
             to="/properties"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="inline-block px-10 py-4 border-2 border-[#c9a961] text-[#c9a961] rounded-full hover:bg-[#c9a961] hover:text-white transition-all duration-300 text-sm tracking-wide hover:shadow-xl"
             style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
           >

@@ -1,23 +1,34 @@
 import { DoveHeader } from "../components/DoveHeader";
 import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { properties } from "../data/properties";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { MapPin, Bed, Bath, Maximize } from "lucide-react";
 
 export function PropertiesPage() {
   const [filter, setFilter] = useState<"All" | "For Sale" | "For Rent">("All");
   const [sortBy, setSortBy] = useState<"price-low" | "price-high">("price-high");
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
 
-  const filteredProperties = properties
-    .filter((property) => filter === "All" || property.status === filter)
-    .sort((a, b) => {
-      if (sortBy === "price-high") {
-        return b.priceNumeric - a.priceNumeric;
-      }
-      return a.priceNumeric - b.priceNumeric;
-    });
+  const filteredProperties = useMemo(() => {
+    return properties
+      .filter((property) => {
+        const matchesFilter = filter === "All" || property.status === filter;
+        const matchesSearch = !searchQuery || 
+          property.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          property.type.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesFilter && matchesSearch;
+      })
+      .sort((a, b) => {
+        if (sortBy === "price-high") {
+          return b.priceNumeric - a.priceNumeric;
+        }
+        return a.priceNumeric - b.priceNumeric;
+      });
+  }, [filter, sortBy, searchQuery]);
 
   return (
     <div className="min-h-screen bg-white">
