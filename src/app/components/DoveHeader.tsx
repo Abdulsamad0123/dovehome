@@ -81,25 +81,37 @@ export function DoveHeader() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-10">
-            {navItems.map((item, index) => (
-              <motion.div
-                key={item.path}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
-              >
-                <Link
-                  to={item.path}
-                  className={`text-sm tracking-wide transition-colors text-[#c9a961] hover:text-[#b8984f] ${
-                    location.pathname === item.path ? "font-medium" : ""
-                  }`}
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                  onClick={scrollToTop}
+            {navItems.map((item, index) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <motion.div
+                  key={item.path}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="relative"
                 >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    to={item.path}
+                    className="text-sm tracking-wide transition-colors text-[#c9a961] hover:text-[#b8984f]"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    onClick={scrollToTop}
+                  >
+                    {item.label}
+                  </Link>
+                  {isActive && (
+                    <motion.div
+                      layoutId="underline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#c9a961]"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ transformOrigin: "left center" }}
+                    />
+                  )}
+                </motion.div>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -149,22 +161,33 @@ export function DoveHeader() {
             className="lg:hidden py-6 border-t border-gray-200"
           >
             <div className="flex flex-col gap-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`text-[#c9a961] hover:text-[#b8984f] transition ${
-                    location.pathname === item.path ? "font-medium" : ""
-                  }`}
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    scrollToTop();
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="flex gap-3">
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <div key={item.path} className="relative">
+                    <Link
+                      to={item.path}
+                      className="text-[#c9a961] hover:text-[#b8984f] transition block"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        scrollToTop();
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                    {isActive && (
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#c9a961]"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ transformOrigin: "left center" }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+              <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => window.location.reload()}
                   className="flex items-center justify-center w-full px-6 py-2.5 bg-white/10 text-white rounded-full hover:bg-white/20 transition"
