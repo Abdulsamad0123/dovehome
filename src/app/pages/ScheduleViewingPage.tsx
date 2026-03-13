@@ -1,9 +1,8 @@
 import { DoveHeader } from "../components/DoveHeader";
 import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, Clock, Home } from "lucide-react";
-import { HeroSection } from "../components/HeroSection";
 
 export function ScheduleViewingPage() {
   const [formData, setFormData] = useState({
@@ -16,6 +15,10 @@ export function ScheduleViewingPage() {
     message: ""
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Your viewing has been scheduled! We'll send you a confirmation email shortly.");
@@ -26,14 +29,30 @@ export function ScheduleViewingPage() {
     <div className="min-h-screen bg-white">
       <DoveHeader />
       
-      <HeroSection
-        title="Schedule a Viewing"
-        subtitle="Book a private tour of your dream property. Our advisors will help you find the perfect match."
-        primaryCta={{ label: "View Properties", to: "/properties" }}
-        secondaryCta={{ label: "Contact Us", to: "/contact" }}
-        imageSrc="https://images.unsplash.com/photo-1494533166594-0fa42dd5a3ee?auto=format&fit=crop&w=1600&q=80"
-        heightClass="h-[50vh]"
-      />
+      <section className="relative py-20 bg-gradient-to-br from-[#0b1726] to-[#1e2b46]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl lg:text-6xl text-white mb-6"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              Schedule a Viewing
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl text-white/80 max-w-2xl mx-auto"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 300 }}
+            >
+              Book a private tour of your dream property. Our advisors will help you find the perfect match.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
       {/* Form Section */}
       <section className="py-24 lg:py-32">

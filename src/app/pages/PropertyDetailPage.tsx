@@ -165,6 +165,7 @@ export function PropertyDetailPage() {
                 <div className="space-y-4">
                   <Link
                     to="/schedule-viewing"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="block w-full px-6 py-4 bg-[#c9a961] text-white text-center rounded-full hover:bg-[#b8984f] transition-all duration-300 text-sm tracking-wide"
                     style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
                   >
@@ -173,6 +174,7 @@ export function PropertyDetailPage() {
                   
                   <Link
                     to="/contact"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="block w-full px-6 py-4 border-2 border-[#c9a961] text-[#c9a961] text-center rounded-full hover:bg-[#c9a961] hover:text-white transition-all duration-300 text-sm tracking-wide"
                     style={{ fontFamily: "'Inter', sans-serif", fontWeight: 500 }}
                   >

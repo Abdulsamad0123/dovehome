@@ -1,7 +1,7 @@
 import { DoveHeader } from "../components/DoveHeader";
 import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export function ContactPage() {
@@ -14,6 +14,10 @@ export function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
 
