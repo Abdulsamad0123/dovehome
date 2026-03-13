@@ -90,11 +90,9 @@ export function DoveHeader() {
               >
                 <Link
                   to={item.path}
-                  className={`text-sm tracking-wide transition-colors ${
-                    scrolled
-                      ? "text-[#5a5a5a] hover:text-[#c9a961]"
-                      : "text-white/90 hover:text-white"
-                  } ${location.pathname === item.path ? "text-[#c9a961] font-medium" : ""}`}
+                  className={`text-sm tracking-wide transition-colors text-[#c9a961] hover:text-[#b8984f] ${
+                    location.pathname === item.path ? "font-medium" : ""
+                  }`}
                   style={{ fontFamily: "'Inter', sans-serif" }}
                   onClick={scrollToTop}
                 >
@@ -155,8 +153,8 @@ export function DoveHeader() {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`text-[#5a5a5a] hover:text-[#c9a961] transition ${
-                    location.pathname === item.path ? "text-[#c9a961] font-medium" : ""
+                  className={`text-[#c9a961] hover:text-[#b8984f] transition ${
+                    location.pathname === item.path ? "font-medium" : ""
                   }`}
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -203,7 +201,7 @@ export function DoveHeader() {
                   placeholder="Search properties by location or type..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-[#c9a961] rounded-full text-[#2d2d2d] placeholder-[#5a5a5a]"
+                  className="flex-1 px-4 py-2 border border-[#c9a961] rounded-full text-[#c9a961] placeholder-[#c9a961]"
                   autoFocus
                 />
                 <button
