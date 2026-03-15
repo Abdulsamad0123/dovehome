@@ -155,38 +155,47 @@ export function DoveHeader() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:hidden py-6 border-t border-gray-200"
-          >
-            <div className="flex flex-col gap-4">
-              {navItems.map((item) => {
-                const isActive = location.pathname === item.path;
-                return (
-                  <div key={item.path} className="relative">
-                    <Link
-                      to={item.path}
-                      className="text-[#c9a961] hover:text-[#b8984f] transition block"
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        scrollToTop();
-                      }}
-                    >
-                      {item.label}
-                    </Link>
-                    {isActive && (
-                      <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#c9a961]"
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ transformOrigin: "left center" }}
-                      />
-                    )}
-                  </div>
-                );
-              })}
+          <>
+            {/* Blur Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.nav
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="lg:hidden py-6 border-t border-gray-200 relative z-50"
+            >
+              <div className="flex flex-col gap-4">
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  return (
+                    <div key={item.path} className="relative inline-block">
+                      <Link
+                        to={item.path}
+                        className="text-[#c9a961] hover:text-[#b8984f] transition block"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          scrollToTop();
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                      {isActive && (
+                        <motion.div
+                          className="absolute bottom-0 left-0 h-0.5 bg-[#c9a961]"
+                          initial={{ scaleX: 0, width: 0 }}
+                          animate={{ scaleX: 1, width: "100%" }}
+                          transition={{ duration: 0.3 }}
+                          style={{ transformOrigin: "left center" }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
               <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => window.location.reload()}
@@ -208,6 +217,7 @@ export function DoveHeader() {
               </div>
             </div>
           </motion.nav>
+          </>
         )}
 
         {/* Search Form */}
@@ -215,7 +225,7 @@ export function DoveHeader() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="border-t border-gray-200 py-4"
+            className="border-t border-gray-200 py-4 bg-white/95 backdrop-blur-md"
           >
             <form onSubmit={handleSearch} className="max-w-md mx-auto px-6">
               <div className="flex gap-2">
@@ -224,7 +234,7 @@ export function DoveHeader() {
                   placeholder="Search properties by location or type..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-[#c9a961] rounded-full text-[#c9a961] placeholder-[#c9a961]"
+                  className="flex-1 px-4 py-2 border border-[#c9a961] rounded-full bg-white text-[#2d2d2d] placeholder-[#c9a961]"
                   autoFocus
                 />
                 <button
