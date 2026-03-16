@@ -35,15 +35,15 @@ export function ContactPage() {
     setSubmitting(true);
 
     try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("message", formData.message);
+
       const res = await fetch(formEndpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        }),
+        body: formDataToSend,
       });
 
       if (!res.ok) {
@@ -54,6 +54,7 @@ export function ContactPage() {
       setFormData({ name: "", email: "", phone: "", message: "" });
       setTimeout(() => setSubmitted(false), 6000);
     } catch (error) {
+      console.error("Form submission error:", error);
       setSubmitError("Something went wrong. Please try again later.");
     } finally {
       setSubmitting(false);
