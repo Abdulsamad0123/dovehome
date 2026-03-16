@@ -3,6 +3,16 @@ import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import emailjs from "@emailjs/browser";
+
+// Initialize EmailJS
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+if (EMAILJS_PUBLIC_KEY) {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -19,15 +29,13 @@ export function ContactPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  const formEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT;
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError(null);
 
-    if (!formEndpoint) {
+    if (!EMAILJS_PUBLIC_KEY || !EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID) {
       setSubmitError(
-        "Email service not configured. Set VITE_FORMSPREE_ENDPOINT in your .env file."
+        "Email service not configured. Please set EmailJS credentials in your .env file."
       );
       return;
     }
@@ -35,27 +43,30 @@ export function ContactPage() {
     setSubmitting(true);
 
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("message", formData.message);
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        to_email: "dovehomes247@gmail.com",
+      };
 
-      const res = await fetch(formEndpoint, {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
 
-      if (!res.ok) {
+      if (response.status === 200) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setSubmitted(false), 6000);
+      } else {
         throw new Error("Failed to send message");
       }
-
-      setSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", message: "" });
-      setTimeout(() => setSubmitted(false), 6000);
     } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitError("Something went wrong. Please try again later.");
+      console.error("Email submission error:", error);
+      setSubmitError("Something went wrong. Please try again later or contact us via WhatsApp.");
     } finally {
       setSubmitting(false);
     }
