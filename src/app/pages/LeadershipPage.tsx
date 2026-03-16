@@ -3,7 +3,7 @@ import { DoveFooter } from "../components/DoveFooter";
 import { motion } from "motion/react";
 import { useRef } from "react";
 import { useInView } from "../hooks/useInView";
-import { Mail, Linkedin } from "lucide-react";
+import { MessageCircle, Linkedin } from "lucide-react";
 import { HeroSection } from "../components/HeroSection";
 import ceoImage from "@/assets/ceo.jpeg";
 
@@ -88,10 +88,12 @@ export function LeadershipPage() {
               {/* Contact Links */}
               <div className="flex gap-6">
                 <a
-                  href={`mailto:${ceoMember.email}`}
+                  href="https://wa.me/2348032237889"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center gap-3 px-6 py-3 bg-[#c9a961] text-white rounded-lg hover:bg-[#b8945a] transition-colors"
                 >
-                  <Mail className="w-5 h-5" />
+                  <MessageCircle className="w-5 h-5" />
                   <span style={{ fontFamily: "'Inter', sans-serif" }}>Contact</span>
                 </a>
                 <a
